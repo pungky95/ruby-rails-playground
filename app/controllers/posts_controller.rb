@@ -4,7 +4,6 @@ class PostsController < ApplicationController
   before_action :authorize_request
 
   def index
-    puts pagination_params
     params = pagination_params
     collection = Post.all
     @pagination, @posts = paginate(collection, params)
@@ -18,7 +17,7 @@ class PostsController < ApplicationController
 
   def update
     post = Post.find(params[:id])
-    post.update(post_params)
+    post.update!(post_params)
     render json: post, status: :ok
   end
 
