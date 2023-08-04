@@ -66,6 +66,9 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    argon2 (2.2.0)
+      ffi (~> 1.15)
+      ffi-compiler (~> 1.0)
     builder (3.2.4)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
@@ -74,6 +77,10 @@ GEM
       irb (>= 1.5.0)
       reline (>= 0.3.1)
     erubi (1.12.0)
+    ffi (1.15.5)
+    ffi-compiler (1.0.1)
+      ffi (>= 1.0.0)
+      rake
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.14.1)
@@ -81,6 +88,7 @@ GEM
     io-console (0.6.0)
     irb (1.7.4)
       reline (>= 0.3.6)
+    jwt (2.7.1)
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -147,6 +155,7 @@ GEM
     timeout (0.4.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uuidtools (2.2.0)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -156,11 +165,14 @@ PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
+  argon2
   debug
+  jwt
   mysql2 (~> 0.5)
   puma (~> 5.0)
   rails (~> 7.0.6)
   tzinfo-data
+  uuidtools (~> 2.1)
 
 RUBY VERSION
    ruby 3.2.2p53

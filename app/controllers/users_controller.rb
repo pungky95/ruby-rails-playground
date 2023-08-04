@@ -1,31 +1,16 @@
 class UsersController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-  rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
-
-  private
-
-  def render_not_found_response
-    render json: { error: "User not found" }, status: :not_found
-  end
-
-  def render_unprocessable_entity_response
-    render json: { error: invalid.record.errors.full_messages }, status: :unprocessable_entity
-  end
-
-  def index
-    render json: User.all
-  end
+  before_action :authorize_request
 
   def show
-    render json: User.Find(params[:id])
+    render json: @current_user
   end
 
-  def create
-    user = User.create(user_params)
-    if user.valid?
-      render json: user, status: :created
+  def update
+    if @current_user.update(user_params)
+      render json: @current_user
     else
-      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @current_user.errors.full_messages },
+             status: :unprocessable_entity
     end
   end
 
