@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+
   def not_found
     render json: { error: 'not_found' }
   end
@@ -24,5 +25,9 @@ class ApplicationController < ActionController::API
 
   def render_not_found_response(exception)
     render json: { error: exception.message }, status: :not_found
+  end
+
+  def pagination_params
+    params.permit(:page, :limit)
   end
 end

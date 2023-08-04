@@ -1,12 +1,17 @@
 class PostsController < ApplicationController
+  include Pagination
+
   before_action :authorize_request
 
   def index
-    render json: Post.all
+    puts pagination_params
+    params = pagination_params
+    collection = Post.all
+    @pagination, @posts = paginate(collection, params)
+    render json: { posts: @posts, pagination: @pagination }
   end
 
   def create
-    puts post_params
     post = Post.create!(post_params)
     render json: post, status: :created
   end
@@ -28,6 +33,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.permit(:title, :content).merge(user_id: @current_user.id)
+    params.permit(:title, :content).with_defaults(user_id: @current_user.id)
   end
 end
